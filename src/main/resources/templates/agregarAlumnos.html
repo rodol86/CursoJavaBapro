@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<form action="#" th:action="@{/agregarAlumno}" th:object="${curso}" method="post">
+		<div style="display: block; margin-bottom: 25px;">
+			Curso: <span th:text=${curso.nombre}/>
+			<!-- 
+				Vamos a enviar el id del curso como datos en la URL. Ver mas abajo para la explicacion completa
+			 -->
+			<a th:href="@{/detalleCurso/{idCurso} (idCurso=${curso.id})}">Ver detalle de curso</a>
+		</div>
+		
+		<table>
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nombre</th>
+					<th>Apellido</th>
+					<th>Agregar</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- 
+					En EjemploController definimos model.addAttribute("listadoAlumnos", listadoAlumnos);
+					Por lo que ahora en el formulario puedo acceder el listado de alumnos usando "listadoAlumnos".
+					El 'th:each' nos permite iterar un listado similiar al foreach de java
+				 -->
+				<tr th:each="alumno : ${listadoAlumnos}">
+					<td><span th:text="${alumno.id}"></span></td>
+					<td><span th:text="${alumno.nombre}"></span></td>
+					<td><span th:text="${alumno.apellido}"></span></td>
+					<!-- 
+						Vamos a enviar el id del alumno y el id del curso como datos en la URL.
+						Para hacer eso usamos la siguiente notacion:
+						@{/agregarAlumno/{idCurso}/{idAlumno} (idCurso=${curso.id}, idAlumno=${alumno.id})}
+						
+						/agregarAlumno/{idCurso}/{idAlumno} = es la URL a la que queremos dirigirnos
+						(idCurso=${curso.id}, idAlumno=${alumno.id}) = especificamos el valor de cada variable. En este caso idCurso y idAlumno
+						
+						${curso.id} = podemos acceder el objeto curso dado que esta especificado en el tag <form> donde dice th:object="${curso}"
+						
+						${alumno.id} = es el objeto de estamos iterando
+					 -->
+					<td><a th:href="@{/agregarAlumno/{idCurso}/{idAlumno} (idCurso=${curso.id}, idAlumno=${alumno.id})}">Agregar</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</form>
+</body>
+</html>

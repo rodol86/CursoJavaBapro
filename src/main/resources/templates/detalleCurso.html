@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<form action="#" th:action="@{/agregarAlumno}" th:object="${curso}" method="post">
+		<div style="display: block; margin-bottom: 25px;">
+			Curso: <span th:text=${curso.nombre}/>
+			<a th:href="@{/cargarAlumnos/{idCurso} (idCurso=${curso.id})}">Volver a cargar alumnos</a>
+		</div>
+		
+		<table>
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nombre</th>
+					<th>Apellido</th>
+					<th>Borrar</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="alumno : ${curso.alumnos}">
+					<td><span th:text="${alumno.id}"></span></td>
+					<td><span th:text="${alumno.nombre}"></span></td>
+					<td><span th:text="${alumno.apellido}"></span></td>
+					<td><a th:href="@{/eliminarAlumno/{idCurso}/{idAlumno} (idCurso=${curso.id}, idAlumno=${alumno.id})}">Borrar</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</form>
+</body>
+</html>
